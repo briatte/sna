@@ -82,7 +82,7 @@ as.edgelist.sna<-function(x, attrname=NULL, as.digraph=TRUE, suppress.diag=FALSE
         out<-cbind(out,rep(1,NROW(out)))
       if(suppress.diag&&has.loops(x))
         out<-out[!(out[,1]==out[,2]),]
-      if((!is.directed(x))&&as.digraph){
+      if((!network::is.directed(x))&&as.digraph){
         if(has.loops(x)){
           temp<-out[,1]==out[,2]
           if(any(temp)){
@@ -98,7 +98,7 @@ as.edgelist.sna<-function(x, attrname=NULL, as.digraph=TRUE, suppress.diag=FALSE
       attr(out,"n")<-network.size(x)
       attr(out,"vnames")<-network.vertex.names(x)
     }
-    if(is.bipartite(x)) #Unneeded for new objects, but does no harm
+    if(network::is.bipartite(x)) #Unneeded for new objects, but does no harm
       attr(out,"bipartite")<-get.network.attribute(x,"bipartite")
     else if(force.bipartite)
       out<-as.edgelist.sna(out,attrname=attrname,as.digraph=as.digraph, suppress.diag=suppress.diag,force.bipartite=force.bipartite)
